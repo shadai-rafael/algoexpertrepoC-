@@ -1,3 +1,22 @@
+/*
+MIT License
+Copyright (c) 2023 shadai-rafael
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
 #include "algoexpertcpp.hpp"
 
 /*Fibonacci sequence
@@ -24,6 +43,43 @@ int calculateNthFib(int n, std::map<int, int> fibMap){
 int getNthFib(int n) {
     std::map<int, int> map;
     return calculateNthFib(n,map);
+}
+
+/*Product Sum
+ *Write a function that takes in a "special" and returns its product sum.
+ *A special array is a non-empty array that contain either integers or other special
+ *arrays. The product sum of a "special" array is the sum of its elements, where "special"
+ *arrays inside it are summed themselves and multiplied it by their level of depth.
+ *The depth of a "special" array is how far nested it is. For instance the depth of []
+ *is 1; the depth of the inner array [[]] is 2; the depth of the innermost array in [[[]]] is
+ *3.
+ */
+
+// Tip: You can use el.type() == typeid(vector<any>) to check whether an item is
+// a list or an integer.
+// If you know an element of the array is vector<any> you can cast it using:
+//     any_cast<vector<any>>(element)
+// If you know an element of the array is an int you can cast it using:
+//     any_cast<int>(element)
+
+int productSumHelper(std::vector<std::any> array, int level){
+    int sum = 0;
+    
+    for(auto& element: array){
+        if(element.type() == typeid(int)){
+            sum += static_cast<int>(std::any_cast<int>(element));
+        }else if(element.type()==typeid(std::vector<std::any>)){
+            sum += productSumHelper(static_cast<std::vector<std::any>>(
+                    std::any_cast<std::vector<std::any>>(element)),level+1);
+        }else{
+            return 0;
+        }
+    }
+    return level*sum;
+}
+
+int productSum(std::vector<std::any> array) {
+  return productSumHelper(array,1);
 }
 
 /*Powerset
