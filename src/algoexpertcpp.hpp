@@ -33,6 +33,7 @@ bool isValidSubsequence(std::vector<int> array, std::vector<int> sequence);
 /* Recursion Challenges */
 int getNthFib(int n);
 int productSum(std::vector<std::any> array);
+std::vector<std::vector<int>> getPermutations(std::vector<int> array);
 std::vector<std::vector<int>> noneRecursivePowerset(std::vector<int> array);
 std::vector<std::vector<int>> powerset(std::vector<int> array);
 

@@ -82,6 +82,35 @@ int productSum(std::vector<std::any> array) {
   return productSumHelper(array,1);
 }
 
+/*Permutation
+ *Write a function that takes in an array of unique integers and returns an array
+ *of all permutations of those integers in no particular order.
+ */
+
+std::vector<std::vector<int>> getPermutations(std::vector<int> array) {
+    std::vector<std::vector<int>> result{};
+    if (array.size() == 0){
+        return result;
+    }else if(array.size() == 1){
+        result.push_back(array);
+        return result;
+    }
+
+    for (auto i= array.begin(); i != array.end() ; i++)
+    {        
+        auto holder = *i;
+        array.erase(i);
+        auto tempResult = getPermutations(array);
+        for(auto el: tempResult){
+            el.insert(el.begin(), holder);
+            result.insert(result.begin(), el);
+        }
+        array.insert(i,holder);
+    }
+    
+    return result;
+}
+
 /*Powerset
 *Write a function that takes in an array of unique integers and returns its powerset.
 *The powerset P(X) of a set X is the set of all the subsets of X. For example the powerset

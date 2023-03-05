@@ -17,7 +17,8 @@ add_executable(
 target_link_libraries(
                 Algoexpertcpp_test
                 Algoexpertcpp_lib
-                GTest::gtest_main)
+                GTest::gtest_main
+                GTest::gmock_main)
             
 include(GoogleTest)
             

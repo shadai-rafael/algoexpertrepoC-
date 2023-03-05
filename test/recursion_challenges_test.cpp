@@ -18,6 +18,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 #include <numeric>
 #include <iostream>
 #include "algoexpertcpp.hpp"
@@ -39,15 +40,18 @@ TEST(recursion_callenges, Product_Sum){
     EXPECT_EQ(12, productSum(array3));
 }
 
-TEST(recursion_callenges, powerset) {
+TEST(recursion_challenges,Get_Permutations){
+    std::vector<int> array{1,2,3};
+    std::vector<std::vector<int>> expected{{3,1,2},{3,2,1},{2,1,3},{2,3,1}, 
+            {1,2,3},{1,3,2}};
+    auto result = getPermutations(array);
+    EXPECT_THAT(expected, testing::ContainerEq(result));
+}
+
+TEST(recursion_callenges, Power_Set) {
     std::vector<int> array{1,2};
     std::vector<std::vector<int>> expected{{},{1},{2},{1,2}};
     std::vector<std::vector<int>> result = powerset(array);
     EXPECT_EQ(expected.size(), result.size());
-    for (int i = 0; i < expected.size(); i++)
-    {
-        for(int j = 0; j < expected[i].size();j++){
-            EXPECT_EQ(expected[i][j], result[i][j]);
-        }
-    }    
+    EXPECT_THAT(expected, testing::ContainerEq(result));
 }
