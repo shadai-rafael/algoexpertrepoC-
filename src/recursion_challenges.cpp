@@ -19,6 +19,9 @@ SOFTWARE.
 */
 #include "algoexpertcpp.hpp"
 
+std::string mnemonicsArray[] = {"0","1","abc","def","ghi","jkl","mno","pqrs",
+  "tuv","wxyz"};
+
 /*Fibonacci sequence
  * The Fibonacci sequence is defined as follows: The first number of the sequence is 0,
  * the second number is 1, and the nth number is the sum of the nth(nth-1) and nth(nth-2)
@@ -147,5 +150,47 @@ std::vector<std::vector<int>> powerset(std::vector<int> array) {
         vect.emplace_back(tempElement);
         result.emplace_back(vect);
     }
+    return result;
+}
+
+/*Phone Number Mnemonics
+* Given a stringified phone number of non-zero length write a function that returns
+* all mnemonics for this phone number in any order.
+* For this problem a valid mnemonic may only contain letters and the digits 0 and 1.
+* In other words, if a digit is able to be represented by a letter then it must be.
+* Digits 0 and 1 are the only two digits that don't have a letter representations on
+* the keyboard.
+*/
+std::vector<std::string> phoneNumberMnemonics(std::string phoneNumber) {
+    std::vector<std::string>result{};
+    if(phoneNumber.size()==0){
+        return result;
+    }
+    auto subPhoneNumber = phoneNumber.substr(1,phoneNumber.size());
+    auto phoneChar = phoneNumber.c_str()[0];
+    int indexMnemonic = phoneChar - '0';
+    auto preResult = phoneNumberMnemonics(subPhoneNumber);
+    if (preResult.size() == 0)
+    {
+        for(int i = 0; i < mnemonicsArray[indexMnemonic].size();i++)
+        {
+            auto mnemonicNumber = mnemonicsArray[indexMnemonic].c_str()[i];
+            std::string temp;
+            temp.insert(0,1,mnemonicNumber);
+            result.push_back(temp);
+        }        
+    }else{
+        for(int i = 0; i < mnemonicsArray[indexMnemonic].size();i++)
+        {
+            auto mnemonicNumber = mnemonicsArray[indexMnemonic].c_str()[i];        
+            for (int j = 0; j < preResult.size(); j++)
+            {            
+                std::string temp(preResult[j]);
+                temp.insert(0,1,mnemonicNumber);
+                result.push_back(temp);
+            }        
+        }
+    }
+    
     return result;
 }
