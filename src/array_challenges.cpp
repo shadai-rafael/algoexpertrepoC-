@@ -10,17 +10,25 @@
  */
 std::vector<int> twoNumberSum(std::vector<int> array, int targetSum)
 {
-	for(int i = 0; i < array.size() ;i++)
-	{
-		for(int j = i+1; j < array.size() ; j++)
-		{
-			if(targetSum == array[i] +  array[j])
-			{
-				return{array[i], array[j]};
-			}
-		}
-	}
-  return {};
+    std::unordered_set<int> nums;
+    auto it = std::find_if(array.begin(), array.end(), [&](int num){
+		//calculating the number that is needed to get the target sum
+        int potentialMatch = targetSum - num;
+		//find if there is any into the set
+        if(nums.find(potentialMatch) != nums.end()) {
+            return true;
+        }
+		//if the target sum is not found the num is inserted and go to the next one
+        nums.insert(num);
+        return false;
+    });
+
+	//return the two numbers that sum the target
+    if (it != array.end()) {
+        return { *it, targetSum - *it };
+    }
+
+    return {};
 }
 
 /*Validate Subsequence
@@ -30,17 +38,13 @@ std::vector<int> twoNumberSum(std::vector<int> array, int targetSum)
  *sequence = [1,6,-1,10]
  *true
  */
-bool isValidSubsequence(std::vector<int> array, std::vector<int> sequence)
-{
-  int j = 0;
-  bool flag = false;
-  for (int i = 0; i < array.size(); ++i)
-  {
-		if(array[i] == sequence[j])
-		{
+bool isValidSubsequence(std::vector<int> array, std::vector<int> sequence) {
+	int j = 0;
+	bool flag = false;
+	for(int i = 0; i < array.size() ; ++i){
+		if(array[i] == sequence[j]){
 			j++;
-			if(j == sequence.size())
-			{
+			if(j == sequence.size()){
 				flag = true;
 				break;
 			}
@@ -57,59 +61,24 @@ bool isValidSubsequence(std::vector<int> array, std::vector<int> sequence)
  *[1,4,9,25,36,64,81]
  */
 std::vector<int> sortedSquaredArray(std::vector<int> array) {
-	int negativeBorder = -1;
-	int i=0, j=0, k=0;
-	std::vector<int> resultArray;
-
-	while((i<array.size()) && (array[i] < 0))
-	{
-		negativeBorder++;
-		i++;
-	}
-	
-	i = negativeBorder + 1;
-	j = negativeBorder;
-	while(k < array.size())
-	{		
-		if( (j >= 0) && (i < array.size()))
-		{
-			if( pow(array[j],2) < pow(array[i],2) )
-			{
-				resultArray.push_back(pow(array[j],2));
-				--j;
-			}
-			else
-			{
-				resultArray.push_back(pow(array[i],2));
-				++i;
-			}			
-		}
-		else if(i < array.size())
-		{
-			resultArray.push_back(pow(array[i],2));
-			++i;
-		}
-		else if(j >= 0)
-		{
-			resultArray.push_back(pow(array[j],2));
-			--j;
-		}
-		++k;
-	}
-
+	std::vector<int> resultArray(array.size());
+	transform(array.begin(), array.end(), resultArray.begin(),
+		[](int num){return num*num;});
+	std::sort(resultArray.begin(), resultArray.end());
 	return resultArray;
 }
 
-/* Tournament Winner C++98
+/* Tournament Winner
  *There's an algorithms tournament taking place in wich teams of programmers
  *compete against each other to solve algorithmic problems as fast as possible.
  *Teams compete in a round robin, where each team faces off against all other
  *teams. Only two teams compete against each other at a time, and for each
  *competition, one team is designated the home team, while the other team is the
- *away team. In each competition there's always one winner and one loser; there are
- *no ties. A team receives 3 points if it wins and 0 points if it loses. The
- *winner of the tournament is the team that receives the most amout of points.
- *There is a vector with an inner vector that contains all the competitions:
+ *away team [homeTeam, awayTeam]. In each competition there's always one winner
+ *and one loser; there are no ties. A team receives 3 points if it wins and 0
+ *points if it loses. The winner of the tournament is the team that receives the
+ *most amout of points. There is a vector with an inner vector that contains all
+ *the competitions:
  *[["HTML", "C#"],["C#", "Python"],["Python", "HTML"]]
  *another array holds the competition result where 1 means the home team won and
  *0 means the away team won: 
@@ -120,11 +89,6 @@ std::vector<int> sortedSquaredArray(std::vector<int> array) {
  *C#: 3
  *Python: 6
 */
-bool sortByVal(const std::pair<std::string, int> &a, 
-               const std::pair<std::string, int> &b) 
-{ 
-    return (a.second > b.second); 
-} 
 
 std::string tournamentWinner(std::vector< std::vector<std::string> > competitions,
                         std::vector<int> results)
@@ -150,18 +114,12 @@ std::string tournamentWinner(std::vector< std::vector<std::string> > competition
 		++resultIndex;			
 	}
 	
-	resultIndex = 0;
+	auto maxPair = *std::max_element(scores.begin(), scores.end(),
+		[](const auto& lhs, const auto& rhs) {
+        return lhs.second < rhs.second;
+    });
 	
-    std::vector<std::pair <std::string, int> > vec;
-
-    for (itScores = scores.begin(); itScores != scores.end(); ++itScores) 
-    {
-        vec.push_back(make_pair(itScores->first, itScores->second));
-    }
-
-    sort(vec.begin(), vec.end(), sortByVal); 
-	
-	return vec[0].first;
+	return maxPair.first;
 }
 
 /*Non Constructible Chnage C++ 11

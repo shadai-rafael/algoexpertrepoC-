@@ -21,14 +21,18 @@ SOFTWARE.
 #define ALGOEXPERT_CPP
 #include <algorithm>
 #include <any>
-#include <string>
 #include <map>
 #include <math.h>
+#include <string>
+#include <unordered_set>
 #include <vector>
 
 /* Array Challenges*/
 std::vector<int> twoNumberSum(std::vector<int> array, int targetSum);
 bool isValidSubsequence(std::vector<int> array, std::vector<int> sequence);
+std::vector<int> sortedSquaredArray(std::vector<int> array);
+std::string tournamentWinner(std::vector< std::vector<std::string> > competitions,
+            std::vector<int> results);
 
 /* Recursion Challenges */
 int getNthFib(int n);
