@@ -23,6 +23,7 @@ SOFTWARE.
 #include <any>
 #include <map>
 #include <math.h>
+#include <stack>
 #include <string>
 #include <unordered_set>
 #include <vector>
@@ -42,4 +43,26 @@ std::vector<std::vector<int>> noneRecursivePowerset(std::vector<int> array);
 std::vector<std::vector<int>> powerset(std::vector<int> array);
 std::vector<std::string> phoneNumberMnemonics(std::string phoneNumber);
 
+struct data{
+    data* next;
+    int value;
+
+    data(){
+        next = nullptr;
+        value =-1;
+    }
+};
+class MinMaxStack {
+    private:
+        int min = -1;
+        int max = -1;        
+        std::stack<data> innerStack; 
+    public:
+        MinMaxStack() = default;
+        int peek();
+        int pop();
+        void push(int number);
+        int getMin();
+        int getMax();
+};
 #endif /*ALGOEXPERT_CPP*/
