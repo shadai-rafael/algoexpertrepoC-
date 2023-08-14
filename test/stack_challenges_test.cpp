@@ -41,3 +41,14 @@ TEST(stack_callenges, Min_Max_Stack) {
     EXPECT_EQ(5, minMaxStack.getMax());
     EXPECT_EQ(5, minMaxStack.peek());
 }
+
+TEST(stack_callenges, Balanced_Brackets) {
+    std::string str = "([])(){}(())()()";
+    EXPECT_TRUE(balancedBrackets(str));
+    std::string str1 = "([])(){}(())()(";
+    std::string str2 = "(])(){}(())()()";
+    std::string str3 = "])(){}";
+    EXPECT_FALSE(balancedBrackets(str1));
+    EXPECT_FALSE(balancedBrackets(str2));
+    EXPECT_FALSE(balancedBrackets(str3));
+}

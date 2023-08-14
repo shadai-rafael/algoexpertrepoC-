@@ -107,3 +107,40 @@ int MinMaxStack::getMin() {
 int MinMaxStack::getMax() {
     return max;
 }
+
+/*Balanced Brackets
+*Write a function that takes in a string made up of brackets (,),{,},[,] and other
+*optional characters. The function should return a boolean representing whether the
+*string is balanced with regards to brackets.
+*A string is said to be balanced if it has as many opening brackets of a certain type
+*as it has closing brackets of that type and if no bracket is unmatched. Note that an
+*opening bracket can't match a corresponding closing bracket that comes before it, and
+*similarly, a closing bracket can't match a corresponding opening bracket that comes
+*after it. Also, brackets can't overlap each other as in [(]).
+*/
+bool balancedBrackets(std::string str) {
+    std::stack<char> balancedStack;
+    for(std::string::iterator it = str.begin(); it != str.end(); ++it) {       
+        if(*it == '(' || *it == '[' || *it == '{'){
+            balancedStack.push(*it);
+        }else if(*it == ')' || *it == ']' || *it == '}'){
+            if(balancedStack.empty()){
+                return false;
+            }else if (balancedStack.top() == '(' && *it != ')'){
+                return false;
+            }else if(balancedStack.top() == '[' && *it != ']'){
+                return false;
+            }else if(balancedStack.top() == '{' && *it != '}'){
+                return false;
+            }else{
+                balancedStack.pop();
+            }
+        }else{
+            continue;
+        }        
+    }
+    if(!balancedStack.empty())
+        return false;
+
+    return true;
+}
