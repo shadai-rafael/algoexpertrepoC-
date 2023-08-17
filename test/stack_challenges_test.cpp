@@ -52,3 +52,11 @@ TEST(stack_callenges, Balanced_Brackets) {
     EXPECT_FALSE(balancedBrackets(str2));
     EXPECT_FALSE(balancedBrackets(str3));
 }
+
+TEST(stack_callenges, Sunset_View) {
+    std::vector<int> buildings{3,5,4,4,3,1,3,2};
+    std::vector<int> output1{1,3,6,7};
+    std::vector<int> output2{0,1};
+    EXPECT_THAT(output1, ::testing::ContainerEq(sunsetViews(buildings,"EAST")));
+    EXPECT_THAT(output2, ::testing::ContainerEq(sunsetViews(buildings,"WEST")));
+}

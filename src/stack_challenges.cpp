@@ -144,3 +144,66 @@ bool balancedBrackets(std::string str) {
 
     return true;
 }
+
+/*Sunset Views
+*Given an array of buildings and a direction that all of the buildings face, return an array
+*of the indices of the buildings that can see the sunset.
+*A building can see the sunset if it is strictly taller than all of the buildings that come
+*after it in the direction that it faces.
+*The input array named buildngs contains positive, non-zero integers representing the heights
+*of the buildings. A building at index i thus has an height denoted by buildings[i]. All of the
+*buildings face the same direction, and this direction is either east or west, denoted by the   
+*input string named direction, which will always be equal to either "EAST" or "WEST". In relation
+*to the input array, you can interpret these directions as right for east and left for west.
+*Important note: the indices in the output array should be sorted in ascending order.
+*Buildings=[3,5,4,4,3,1,3,2]
+*Direction="EAST"
+*Output=[1,3,6,7]
+*/
+std::vector<int> sunsetViews(std::vector<int> buildings, std::string direction) {
+    std::vector<int> output;
+    int index{0}, step{1}, end{static_cast<int>(buildings.size()-1)};
+    
+    if (direction.compare("EAST") == 0 && buildings.size() > 0){
+        index = buildings.size()-1;
+        step = -1;
+        end = 0;
+    }else if(direction.compare("WEST") != 0 || buildings.size() == 0){
+        return output;
+    }
+
+    output.push_back(index);
+
+    auto getBuildingIndex= [&output](std::string direction){
+        if(direction.compare("WEST") == 0){
+            return output.back();
+        }else{
+            return output.front();
+        }        
+    };
+
+    auto toInsert = [&output](int index, std::string direction){
+        if(direction.compare("WEST") == 0){
+            output.emplace(output.end(), index);
+        }else{
+            output.emplace(output.begin(), index);
+        }        
+    };
+
+    auto isTheEnd = [](int index, int end, std::string direction){
+        if(direction.compare("WEST") == 0){
+            return index <= end;
+        }else{
+            return index >= end;
+        }
+    };
+ 
+    while(isTheEnd(index, end, direction)) {
+        if(buildings[index] > buildings[getBuildingIndex(direction)]){
+            toInsert(index, direction);
+        }
+        index += step;        
+    }
+
+    return output;
+}
