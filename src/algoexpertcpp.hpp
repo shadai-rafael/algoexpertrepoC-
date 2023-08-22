@@ -21,7 +21,8 @@ SOFTWARE.
 #define ALGOEXPERT_CPP
 #include <algorithm>
 #include <any>
-#include <assert.h> 
+#include <assert.h>
+#include <iostream>
 #include <map>
 #include <math.h>
 #include <stack>
@@ -47,6 +48,7 @@ std::vector<std::string> phoneNumberMnemonics(std::string phoneNumber);
 /*Stack Challenges*/
 bool balancedBrackets(std::string str);
 std::vector<int> sunsetViews(std::vector<int> buildings, std::string direction);
+std::string bestDigits(std::string number, int numDigits);
 
 struct data{
     data* next;

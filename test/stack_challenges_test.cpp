@@ -60,3 +60,11 @@ TEST(stack_callenges, Sunset_View) {
     EXPECT_THAT(output1, ::testing::ContainerEq(sunsetViews(buildings,"EAST")));
     EXPECT_THAT(output2, ::testing::ContainerEq(sunsetViews(buildings,"WEST")));
 }
+
+TEST(stack_callenges, Best_Digits) {
+    ASSERT_EQ(bestDigits("462839", 2), "6839");
+    ASSERT_EQ(bestDigits("321", 1), "32");
+    ASSERT_EQ(bestDigits("10000000002",10),"2");
+    ASSERT_EQ(bestDigits("1020304050",5), "34050");
+    ASSERT_EQ(bestDigits("100300200004",4), "30200004");
+}

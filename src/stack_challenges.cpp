@@ -18,6 +18,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 #include "algoexpertcpp.hpp"
+#include <sstream>
+#include <stdlib.h>
+
+#define CHAR_TO_INT(X)  (X - '0')
 
 /*Min Max Stack Construction
 *
@@ -174,7 +178,7 @@ std::vector<int> sunsetViews(std::vector<int> buildings, std::string direction) 
 
     output.push_back(index);
 
-    auto getBuildingIndex= [&output](std::string direction){
+    auto getBuildingIndex= [&output](std::string& direction){
         if(direction.compare("WEST") == 0){
             return output.back();
         }else{
@@ -182,7 +186,7 @@ std::vector<int> sunsetViews(std::vector<int> buildings, std::string direction) 
         }        
     };
 
-    auto toInsert = [&output](int index, std::string direction){
+    auto toInsert = [&output](int index, std::string& direction){
         if(direction.compare("WEST") == 0){
             output.emplace(output.end(), index);
         }else{
@@ -190,7 +194,7 @@ std::vector<int> sunsetViews(std::vector<int> buildings, std::string direction) 
         }        
     };
 
-    auto isTheEnd = [](int index, int end, std::string direction){
+    auto isTheEnd = [](int index, int end, std::string& direction){
         if(direction.compare("WEST") == 0){
             return index <= end;
         }else{
@@ -206,4 +210,41 @@ std::vector<int> sunsetViews(std::vector<int> buildings, std::string direction) 
     }
 
     return output;
+}
+
+/*Best Digits
+*Write a function that takes a positive integer represented as a string number and an
+*integer numDigits. Remove numDigits from the string so that the number represented by the 
+*string is as large as possible afterwards.
+*Note that the order of the remaining digit cannot be changed. You can assume numDigits
+*will always be less than the length of number and greater than or equal to zero.
+*/
+std::string bestDigits(std::string number, int numDigits) {
+    int window = numDigits, offset = 0;
+    std::ostringstream oss;
+    
+    auto windowCheck = [](const std::string& number, int window, const int offset){
+        int counter = 0, gindex = offset;
+        int gNbr = CHAR_TO_INT(number[offset]);
+        while ( window > counter  &&  offset + counter + 1 < number.size())
+        {
+            if (gNbr < CHAR_TO_INT(number[counter + offset + 1])){
+                gNbr = CHAR_TO_INT(number[counter + offset + 1]);
+                gindex = counter + offset + 1;
+            }
+            counter++;
+        }
+        return gindex;
+    };
+
+    while (offset < number.size())
+    {        
+        int prevOffset = offset;
+        offset = windowCheck(number, window, offset);
+        window = window - (offset - prevOffset);
+        if(! ((number.size() - oss.str().size()) <= window && window !=0))
+            oss << number[offset];
+        offset++;
+    }
+    return oss.str();
 }
