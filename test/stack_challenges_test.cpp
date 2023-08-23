@@ -68,3 +68,9 @@ TEST(stack_callenges, Best_Digits) {
     ASSERT_EQ(bestDigits("1020304050",5), "34050");
     ASSERT_EQ(bestDigits("100300200004",4), "30200004");
 }
+
+TEST(stack_callenges, Sort_Stack) {
+    std::vector<int> input{-5,2,-2,4,3,1};
+    std::vector<int> output{-5,-2,1,2,3,4};
+    EXPECT_THAT(sortStack(input), ::testing::ContainerEq(output));
+}

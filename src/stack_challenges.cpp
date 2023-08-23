@@ -242,9 +242,63 @@ std::string bestDigits(std::string number, int numDigits) {
         int prevOffset = offset;
         offset = windowCheck(number, window, offset);
         window = window - (offset - prevOffset);
-        if(! ((number.size() - oss.str().size()) <= window && window !=0))
+        if(! ((number.size() - oss.str().size()) == window && window !=0))
             oss << number[offset];
         offset++;
     }
     return oss.str();
+}
+
+/*Sort Stack
+*Write a function that takes an array of integer representing a stak, recursively sort the stack in
+*place and returns it.
+*The array must be treated as a stack, with the end of the array as the top of the stack. Therefore
+*you're only allowed to:
+*+Pop elements from the top of the stack by removing elements from the end of the array using the
+*built-in pop() in your programming language of choice.
+*+Push elements to the top of the stack by appending elements to the end of the array using the 
+*built in append method in your programming language of choice.
+*+Peek at the element on top of the stack by accessing the last element in the array.
+*You're not allowed to perform any other operations on the input array including accesing elements
+*(except for the last element), moving elements, etc.. you're also not allowed to use any other data
+*structures, and your solution must be recursive.
+*/
+std::vector<int> sortStack(std::vector<int>& stack) {
+
+    if ( stack.size() < 2 )
+    {
+        return stack;
+    }
+    
+    auto getTheGreater = [&stack](){
+        int greater = stack.back();
+        stack.pop_back();
+        std::vector<int> tempStack;
+
+        while (stack.size())
+        {
+            if (greater < stack.back())
+            {
+                int oldGreater = greater; 
+                greater = stack.back();
+                stack.pop_back();
+                tempStack.push_back(oldGreater);
+            }else
+            {
+                tempStack.push_back(stack.back());
+                stack.pop_back();
+            }            
+        }
+
+        stack.swap(tempStack);
+        return greater;
+    };
+
+    int greater = getTheGreater();
+
+    stack = sortStack(stack);
+
+    stack.push_back(greater);
+   
+    return stack;
 }
