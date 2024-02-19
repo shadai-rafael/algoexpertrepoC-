@@ -7,10 +7,10 @@ target_sources(
             PRIVATE
             array_challenges.cpp
             recursion_challenges.cpp
-            stack_challenges.cpp)
+            stack_challenges.cpp
+            binary_search_tree_challenges.cpp)
 
 target_include_directories(
             Algoexpertcpp_lib
             PUBLIC
             ./)
-

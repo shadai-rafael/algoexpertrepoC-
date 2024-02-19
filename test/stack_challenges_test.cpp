@@ -74,3 +74,9 @@ TEST(stack_callenges, Sort_Stack) {
     std::vector<int> output{-5,-2,1,2,3,4};
     EXPECT_THAT(sortStack(input), ::testing::ContainerEq(output));
 }
+
+/*TEST(stack_callenges, Next_Greater_Element) {
+    std::vector<int> array{2,5,-3,-4,6,7,2};
+    std::vector<int> output{5,6,6,6,7,-1,5};
+    EXPECT_THAT(nextGreaterElement(array), ::testing::ContainerEq(output));
+}*/

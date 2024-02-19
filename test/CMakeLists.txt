@@ -13,7 +13,9 @@ add_executable(
                 main.cpp
                 array_callenges_test.cpp
                 recursion_challenges_test.cpp
-                stack_challenges_test.cpp)
+                stack_challenges_test.cpp
+                binary_search_tree_challenges_test.cpp
+                )
             
 target_link_libraries(
                 Algoexpertcpp_test

@@ -50,6 +50,7 @@ bool balancedBrackets(std::string str);
 std::vector<int> sunsetViews(std::vector<int> buildings, std::string direction);
 std::string bestDigits(std::string number, int numDigits);
 std::vector<int> sortStack(std::vector<int>& stack);
+std::vector<int> nextGreaterElement(std::vector<int> array);
 
 struct data{
     data* next;
@@ -73,4 +74,17 @@ class MinMaxStack {
         int getMin();
         int getMax();
 };
+
+/* Binary Search Tree */
+template<typename T>
+class BST {
+public:
+    T value;
+    BST* left;
+    BST* right;
+
+    BST(T val) : value {val}, left{nullptr}, right{nullptr} {}
+};
+
+int findClosestValueInBst(BST<int>* tree, int target);
 #endif /*ALGOEXPERT_CPP*/
